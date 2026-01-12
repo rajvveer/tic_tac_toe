@@ -134,7 +134,7 @@ export default function App(){
   };
 
   const createConfetti = () => {
-    const colors = ['#06b6d4','#8b5cf6','#f59e0b','#10b981','#ef4444'];
+    const colors = ['#0ea5e9','#8b5cf6','#f59e0b','#10b981','#ef4444'];
     for(let i=0; i<30; i++){
       setTimeout(() => {
         const confetti = document.createElement('div');
@@ -249,7 +249,7 @@ export default function App(){
       const cellEls = document.querySelectorAll('.cell');
       if(cellEls[best.idx]){
         const originalBg = cellEls[best.idx].style.background;
-        cellEls[best.idx].style.background = 'rgba(16,185,129,0.2)';
+        cellEls[best.idx].style.background = '#e2e8f0'; // simple gray highlight
         setTimeout(() => {
           cellEls[best.idx].style.background = originalBg;
         }, 1000);
@@ -301,15 +301,19 @@ export default function App(){
   }));
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#041021] to-[#071225] p-5 text-white font-sans select-none relative overflow-x-hidden">
-
-      <div className="relative z-10 max-w-6xl w-full grid md:grid-cols-[1fr_380px] gap-6 rounded-xl p-6 bg-gradient-to-tr from-cyan-900/10 to-purple-900/10 shadow-2xl backdrop-blur-md">
+    // Changed: Solid light gray background, removed gradients, dark text
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-5 text-gray-800 font-sans select-none overflow-x-hidden">
+      
+      {/* Changed: Simple white card with standard border and shadow */}
+      <div className="max-w-6xl w-full grid md:grid-cols-[1fr_380px] gap-6 rounded-xl p-6 bg-white shadow-xl border border-gray-200">
+        
         <div className="flex flex-col items-center gap-4">
           <div className="flex items-center gap-3 flex-wrap mb-2">
-            <h1 className="text-2xl bg-gradient-to-r from-cyan-500 to-purple-600 bg-clip-text text-transparent font-extrabold select-none flex items-center gap-2">
+            {/* Changed: Removed gradient text, used solid color */}
+            <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2">
               ⚡ Tic Tac Toe
             </h1>
-            <span className="text-xs text-gray-400">Unbeatable AI (Minimax) — Play vs Computer or vs Human</span>
+            <span className="text-sm text-gray-500">Unbeatable AI (Minimax)</span>
           </div>
 
           <Board
@@ -318,11 +322,12 @@ export default function App(){
             disabled={!running}
           />
 
-          <div className="flex items-center gap-3 text-xs text-gray-400 select-none">
+          <div className="flex items-center gap-3 text-xs text-gray-500 select-none">
             <span>💡 Shortcuts:</span>
-            <span className="px-1.5 py-0.5 rounded bg-white/10 font-mono">R</span>
-            <span className="px-1.5 py-0.5 rounded bg-white/10 font-mono">U</span>
-            <span className="px-1.5 py-0.5 rounded bg-white/10 font-mono">H</span>
+            {/* Changed: Shortcuts use gray backgrounds instead of white/10 */}
+            <span className="px-1.5 py-0.5 rounded bg-gray-200 font-mono text-gray-700">R</span>
+            <span className="px-1.5 py-0.5 rounded bg-gray-200 font-mono text-gray-700">U</span>
+            <span className="px-1.5 py-0.5 rounded bg-gray-200 font-mono text-gray-700">H</span>
             <span>Restart / Undo / Hint</span>
           </div>
         </div>
@@ -351,47 +356,6 @@ export default function App(){
         />
       </div>
 
-      {/* Background particles */}
-      {/* Background particles */}
-      <Particles />
-      {/* Confetti animation styles in global CSS */}
-      {/* Confetti animation styles in global CSS */}
     </div>
   );
 }
-
-// Particles background component for subtle animated particles
-function Particles(){
-  const [particles, setParticles] = React.useState([]);
-
-  React.useEffect(() => {
-    const generated = [];
-    for(let i=0; i<15; i++){
-      generated.push({
-        id: i,
-        left: Math.random() * 100,
-        delay: Math.random() * 15,
-        dur: 15 + Math.random() * 10,
-      });
-    }
-    setParticles(generated);
-  }, []);
-
-  return (
-    <div className="fixed top-0 left-0 w-full h-full pointer-events-none -z-10">
-      {particles.map(p => (
-        <div
-          key={p.id}
-          className="rounded-full bg-cyan-500 opacity-30 w-1 h-1 absolute animate-float"
-          style={{
-            left: `${p.left}%`,
-            animationDelay: `${p.delay}s`,
-            animationDuration: `${p.dur}s`,
-            bottom: 0,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
